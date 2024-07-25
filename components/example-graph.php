@@ -33,7 +33,7 @@ series: [
     color: "#7E3BF2",
   },
   {
-    name: "Something",
+    name: "Lead",
     data: [20, 24, 26, 26, 21, 23],
     color: "#aeff2c",
   },

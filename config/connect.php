@@ -1,6 +1,8 @@
 <?php
 
     // get env
+    date_default_timezone_set("Asia/Kuala_Lumpur"); 
+
     $env = parse_ini_string(file_get_contents(__DIR__.'/.env'));
     $hostname = $env['HOSTNAME'];
     $username = $env['USERNAME'];
@@ -13,8 +15,8 @@
     
     try{
         // connect to db
-        $pdo = new PDO($dsn, $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $connect = new PDO($dsn, $username, $password);
+        $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     catch(PDOException $error){
         echo $error->getMessage();

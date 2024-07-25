@@ -1,8 +1,9 @@
 <?php
     session_start();
 
-    require_once('../config/connect.php');
-    require_once('../config/csrf-token.php');
+    include '../config/connect.php';
+    include '../config/security.php';
+    include '../config/csrf-token.php';
 
     if(isset($_POST['token']) && verifyCSRFToken($_POST['token'])){
 
@@ -24,9 +25,9 @@
                     //* File is not found
                     if($_FILES["image"]["error"] === 4){
 
-                        //TODO
-                        $_SESSION['prompt'] = "Maaf Gambar Tidak Boleh Dijumpai";
-                        header("location:../");
+                        $_SESSION['alert-message'] = "Image not found";
+                        $_SESSION['alert-error'] = TRUE;
+                        header("location:../upload.php");
                     }
 
                     else{
@@ -42,7 +43,8 @@
                         //* Wrong file extention
                         if(!in_array($imageExtension, $validImageExtension)){
 
-                            $_SESSION['prompt'] = "Maaf Gambar Tidak Valid";
+                            $_SESSION['alert-message'] = "File type not valid";
+                            $_SESSION['alert-error'] = TRUE;
                             header("location:../");               
                         }
 
@@ -50,36 +52,70 @@
                             //* Image is correct
                             $newImageName = uniqid();
                             $newImageName .= '.' . $imageExtension;
-                            $destination = __DIR__ . "/../uploads/" . $newImageName;
+                            $destination = __DIR__ . "/../uploads/documents/" . $newImageName;
                             move_uploaded_file($TmpName, $destination);
                             
-                            // echo $TmpName;
-                            // echo "<br>";
-                            // echo $newImageName;
-                            // echo "<br>";
-                            // echo $nama_file = $newImageName;
+                            //* Get user info
+                            $user_value_hash = $_SESSION['user_login_value'];
+                            $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
+                            parse_str($user_value_txt, $user_value);
+
+                            //* Set variables
+                            $id_user = $user_value['id_user'];
+                            $file_name_graph = $newImageName;
+                            $val_one_name_graph = validateInput($_POST['variable_one_name']);
+                            $val_one_unit_graph = validateInput($_POST['variable_one_unit']);
+                            $val_two_name_graph = validateInput($_POST['variable_two_name']);
+                            $val_two_unit_graph = validateInput($_POST['variable_two_unit']);
+                            $create_date_graph = date("Y-m-d");
                             
-                            //TODO Buat query
-                            // $tambah_aduan_kerosakan_umum = mysqli_query($connect, "INSERT INTO aduan_kerosakan_umum VALUES (NULL,'$nama_pelapor','$lokasi_terperinci_aduan','$butiran_kerosakan','$tarikh_aduan', NULL, NULL, NULL, '$nama_file', '1')");
+                            //* Add data to database
+                            $create_graph_sql = $connect->prepare("INSERT INTO graph(id_graph, id_user, file_name_graph, val_one_name_graph, val_one_unit_graph, val_two_name_graph, val_two_unit_graph, created_date_graph, status_graph) VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , 1)");
+                            $create_graph_sql->execute([
+                                $id_user,
+                                $file_name_graph,
+                                $val_one_name_graph,
+                                $val_one_unit_graph,
+                                $val_two_name_graph,
+                                $val_two_unit_graph,
+                                $create_date_graph
+                            ]);
             
-                            // $_SESSION['prompt'] = "Berjaya Hantar Aduan";
-                            // header("location:../");
+                            //* Redirect
+                            $_SESSION['alert-message'] = "Uploaded data";
+                            $_SESSION['alert-success'] = TRUE;
+                            $id_graph = $connect->lastInsertId();
+                            header("location:../user/graph.php?id_graph=$id_graph");
                         }
                     }
                 }
                 else{
                     //* No Image is given
-                    // $tambah_aduan_kerosakan_umum = mysqli_query($connect, "INSERT INTO aduan_kerosakan_umum VALUES (NULL,'$nama_pelapor','$lokasi_terperinci_aduan','$butiran_kerosakan','$tarikh_aduan', NULL, NULL, NULL, NULL, '1')");
     
-                    // $_SESSION['prompt'] = "Berjaya Hantar Aduan";
-                    // header("location:../");
+                    $_SESSION['alert-message'] = "Image not found";
+                    $_SESSION['alert-error'] = TRUE;
+                    header("location:../upload.php");
                 }
             }
+            else{
+                //* Variable not complete
+                $_SESSION['alert-message'] = "Data not complete";
+                $_SESSION['alert-error'] = TRUE;
+                header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+            }
+        }
+        else{
+            $_SESSION['alert-message'] = "Wrong Function";
+            $_SESSION['alert-error'] = TRUE;
+            header("Location: " . $_SERVER["HTTP_REFERER"]);
+
         }
 
     }
     else{
-        $_SESSION['prompt'] = "Invalid Token";
+        $_SESSION['alert-message'] = "Invalid Token";
+        $_SESSION['alert-error'] = TRUE;
         header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 

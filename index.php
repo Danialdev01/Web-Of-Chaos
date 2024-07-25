@@ -1,7 +1,7 @@
 <?php $location_index = "."; include("./components/header.php")?>
 <body class="dark:bg-gray-900">
 
-    <?php $location_index = "."; require("./components/client/navbar.php")?>
+    <?php $location_index = "."; require("./components/navbar.php")?>
 
     <div id="home" style="height: 85dvh;" class="pt-24">
         <div class="hero-content">
@@ -9,9 +9,9 @@
                 <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Predict</span> The Future</h1>
                 <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 px-2">Make prediction on real world data with the help of Mathematical Modelling.</p>
                 <br>
-                <a href="./upload.php">
-                    <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Upload My Data</button>
-                </a>
+                <button data-modal-target="signup-modal" data-modal-toggle="signup-modal" class="block text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" type="button">
+                    Upload My Data
+                </button>
             </center>
         </div>
     </div>
@@ -76,7 +76,7 @@
     <div id="example" style="height: 90dvh;" class="pt-20">
         <center>
             <div class="max-w-4xl">
-                <?php $location_index = "."; require("./example-graph.php")?>
+                <?php $location_index = "."; require("./components/example-graph.php")?>
             </div>
         </center>
     </div>
