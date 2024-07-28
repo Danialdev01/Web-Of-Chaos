@@ -12,6 +12,7 @@
 
             //* Find info about graph
             if(
+                isset($_POST['name_graph']) && 
                 isset($_POST['variable_one_name']) && 
                 isset($_POST['variable_one_unit']) && 
                 isset($_POST['variable_two_name']) && 
@@ -62,6 +63,7 @@
 
                             //* Set variables
                             $id_user = $user_value['id_user'];
+                            $name_graph = validateInput($_POST['name_graph']);
                             $file_name_graph = $newImageName;
                             $val_one_name_graph = validateInput($_POST['variable_one_name']);
                             $val_one_unit_graph = validateInput($_POST['variable_one_unit']);
@@ -70,9 +72,10 @@
                             $create_date_graph = date("Y-m-d");
                             
                             //* Add data to database
-                            $create_graph_sql = $connect->prepare("INSERT INTO graph(id_graph, id_user, file_name_graph, val_one_name_graph, val_one_unit_graph, val_two_name_graph, val_two_unit_graph, created_date_graph, status_graph) VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , 1)");
+                            $create_graph_sql = $connect->prepare("INSERT INTO graph(id_graph, id_user, name_graph, file_name_graph, val_one_name_graph, val_one_unit_graph, val_two_name_graph, val_two_unit_graph, created_date_graph, status_graph) VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , ? , 1)");
                             $create_graph_sql->execute([
                                 $id_user,
+                                $name_graph,
                                 $file_name_graph,
                                 $val_one_name_graph,
                                 $val_one_unit_graph,

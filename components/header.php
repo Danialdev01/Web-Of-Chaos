@@ -21,10 +21,13 @@
         html {
             scroll-behavior: smooth;
         }
+        main{
+            min-height: 85dvh;
+        }
         /* ::-webkit-scrollbar {
             display: none;
         } */
     </style>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <title>ChaosRandSeer</title>
+    <title>Web Of Chaos</title>
 </head>

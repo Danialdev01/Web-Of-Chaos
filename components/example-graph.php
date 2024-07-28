@@ -8,7 +8,7 @@
     </div>
     <div
       class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-      23%
+      94% CC
       <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
       </svg>
@@ -23,7 +23,7 @@ const options = {
 // add data series via arrays, learn more here: https://apexcharts.com/docs/series/
 series: [
   {
-    name: "Insight",
+    name: "Time Series",
     data: [21, 24, 25, 26, 22, 23],
     color: "#1A56DB",
   },
@@ -31,11 +31,6 @@ series: [
     name: "Prediction",
     data: [21, 23, 24, 27, 21, 24],
     color: "#7E3BF2",
-  },
-  {
-    name: "Lead",
-    data: [20, 24, 26, 26, 21, 23],
-    color: "#aeff2c",
   },
 ],
 chart: {

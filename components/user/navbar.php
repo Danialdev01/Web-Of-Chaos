@@ -1,10 +1,16 @@
 <?php
-//   if(isset($_COOKIE['ChaosRandSeer']) || isset($_SESSION['user_login_value'])){
-    
-//   }
-//   else{
-//     header("location:$location_index/");
-//   }
+    if(isset($_COOKIE['ChaosRandSeer']) || isset($_SESSION['user_login_value'])){
+
+        //* If the user session is not set but cookie is set
+        if(!isset($_SESSION['user_login_value']) && isset($_COOKIE['ChaosRandSeer'])){
+
+            //* Set session value
+            $_SESSION['user_login_value'] = $_COOKIE['ChaosRandSeer'];
+        }
+    }
+    else{
+        header("location:$location_index/");
+    }
 
 ?>
 
