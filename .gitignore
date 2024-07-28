@@ -1,3 +1,4 @@
 
 config/.env
 uploads/documents/*.txt
+uploads/documents/*.csv

@@ -28,7 +28,7 @@
 
                         $_SESSION['alert-message'] = "Image not found";
                         $_SESSION['alert-error'] = TRUE;
-                        header("location:../upload.php");
+                        header("location:../user/upload.php");
                     }
 
                     else{
@@ -37,7 +37,7 @@
                         $fileName = $_FILES["image"]["name"];
                         $fileSize = $_FILES["image"]["size"];
                         $TmpName = $_FILES["image"]["tmp_name"];
-                        $validImageExtension = ['txt'];
+                        $validImageExtension = ['csv'];
                         $imageExtension = explode('.', $fileName);
                         $imageExtension = strtolower(end($imageExtension));
             
@@ -46,7 +46,7 @@
 
                             $_SESSION['alert-message'] = "File type not valid";
                             $_SESSION['alert-error'] = TRUE;
-                            header("location:../");               
+                            header("location:../user/upload.php");               
                         }
 
                         else{
@@ -95,9 +95,9 @@
                 else{
                     //* No Image is given
     
-                    $_SESSION['alert-message'] = "Image not found";
+                    $_SESSION['alert-message'] = "File not found";
                     $_SESSION['alert-error'] = TRUE;
-                    header("location:../upload.php");
+                    header("location:../user/upload.php");
                 }
             }
             else{

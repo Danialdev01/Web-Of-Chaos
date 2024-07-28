@@ -2,7 +2,7 @@
     require_once("$location_index/config/connect.php");
     session_start();
 
-    require_once("$location_index/config/csrf-token.php");
+   include "$location_index/config/csrf-token.php";
     $token = generateCSRFToken();
 
 ?>
