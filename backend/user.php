@@ -38,7 +38,7 @@
                         $password_user_hash = password_hash($password_user, PASSWORD_DEFAULT);
    
                         //* Create user inside database
-                        $create_user_sql = $connect->prepare("INSERT INTO user (id_user, name_user, email_user, password_user, type_user, logo_user, status_user) VALUES (NULL, ? , ? , ? , 1 , NULL , 1)");
+                        $create_user_sql = $connect->prepare("INSERT INTO user (id_user, name_user, email_user, password_user, type_user, logo_user, company_name_user, desc_user, status_user) VALUES (NULL, ? , ? , ? , 1 , NULL , NULL, NULL, 1)");
                         $create_user_sql->execute([
                             $name_user,
                             $email_user,
@@ -157,6 +157,97 @@
             exit();
 
         }
+
+        //@ Update user
+        elseif(isset($_POST['update_user'])){
+
+            if(
+                isset($_POST['name_user']) && 
+                isset($_POST['email_user']) && 
+                isset($_POST['company_name_user']) && 
+                isset($_POST['desc_user']) 
+            ){
+
+                //* Find current user value
+                $user_value_hash = $_SESSION['user_login_value'];
+                $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
+                parse_str($user_value_txt, $user_value);
+
+                //* Validate data
+                $name_user = validateInput($_POST['name_user']);
+                $email_user = validateInput($_POST['email_user']);
+                $company_name_user = validateInput($_POST['company_name_user']);
+                $desc_user = validateInput($_POST['desc_user']);
+
+                //* Update user info in database
+                $user_sql = $connect->prepare("UPDATE user SET name_user = ? , email_user = ? , company_name_user = ? , desc_user = ? WHERE id_user = ?");
+                $user_sql->execute([
+                    $name_user,
+                    $email_user,
+                    $company_name_user,
+                    $desc_user,
+                    $user_value['id_user']
+                ]);
+
+                //* Redirect user 
+                $_SESSION['alert-message'] = "Successfully Updated User";
+                $_SESSION['alert-success'] = TRUE;
+                header("location:../user/user.php");
+
+            }
+            else{
+
+                $_SESSION['alert-message'] = "Data not complete";
+                $_SESSION['alert-error'] = TRUE;
+                header("Location: " . $_SERVER["HTTP_REFERER"]);   
+            }
+        }
+
+        //@ Delete user
+        elseif(isset($_POST['delete_user'])){
+
+            //* Make sure the right user isset
+            if(isset($_POST['user_login_value'])){
+
+                //* Find user info from session
+                $user_value_hash = $_POST['user_login_value'];
+                $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
+                parse_str($user_value_txt, $user_value);
+
+                //* Find user info from database
+                $user_sql = $connect->prepare("SELECT * FROM user WHERE id_user = ?");
+                $user_sql->execute([$user_value['id_user']]);
+                $user = $user_sql->fetch(PDO::FETCH_ASSOC);
+
+                //* Verify if user password is valid
+                if(password_verify($user_value['password_user'], $user['password_user'])){
+
+                    //* Deactivate user
+                    $deactivate_user_sql = $connect->prepare("UPDATE user SET status_user = '0' WHERE id_user = ?");
+                    $deactivate_user_sql->execute([$user_value['id_user']]);
+
+                    //* Destroy sesssion
+                    session_destroy();
+                    setcookie('ChaosRandSeer', 2, time() - 3600 , "/");
+                    header("location:../");
+                    exit();
+                    
+                }
+                else{
+                    $_SESSION['alert-message'] = "Password user not valid";
+                    $_SESSION['alert-error'] = TRUE;
+                    header("Location: " . $_SERVER["HTTP_REFERER"]);
+                }
+
+            }    
+            else{
+                $_SESSION['alert-message'] = "User value not set";
+                $_SESSION['alert-error'] = TRUE;
+                header("Location: " . $_SERVER["HTTP_REFERER"]);
+            }
+
+        }
+
         else{
             $_SESSION['alert-message'] = "Wrong Function";
             $_SESSION['alert-error'] = TRUE;
