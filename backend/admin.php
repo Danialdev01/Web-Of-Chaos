@@ -74,6 +74,22 @@
 
         }
 
+        //@ Signin Admin
+        elseif(isset($_POST['signin_admin'])){
+
+            if(
+                isset($_POST['name_admin']) &&
+                isset($_POST['password_admin'])
+            ){
+
+                $name_admin = validateInput($_POST['name_admin']);
+                $admin_sql = $connect->prepare("SELECT * FROM admins WHERE name_admin = ?");
+                $admin_sql->execute([$name_admin]);
+                
+
+            }
+        }
+
         else{
             $_SESSION['alert-message'] = "Wrong Function";
             $_SESSION['alert-error'] = TRUE;

@@ -1,4 +1,7 @@
 
 config/.env
-uploads/documents/*.txt
-uploads/documents/*.csv
+# uploads/documents/*.txt
+
+# uploads/documents/*.csv
+log/user_activity_log
+log/error_log

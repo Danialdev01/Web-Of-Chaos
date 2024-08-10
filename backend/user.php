@@ -1,6 +1,6 @@
 <?php
-
     session_start();
+
     include '../config/connect.php';
     include '../config/security.php';
     include '../config/functions.php';
@@ -188,7 +188,7 @@
                 $desc_user = validateInput($_POST['desc_user']);
 
                 //* Update user info in database
-                $user_sql = $connect->prepare("UPDATE user SET name_user = ? , email_user = ? , company_name_user = ? , desc_user = ? WHERE id_user = ?");
+                $user_sql = $connect->prepare("UPDATE users SET name_user = ? , email_user = ? , company_name_user = ? , desc_user = ? WHERE id_user = ?");
                 $user_sql->execute([
                     $name_user,
                     $email_user,
@@ -262,15 +262,15 @@
         }
 
         else{
-            $_SESSION['alert-message'] = "Wrong Function";
-            $_SESSION['alert-error'] = TRUE;
+            log_activity_message("../log/error_log", "Wrong Function");
+            alert_message("error", "Wrong Function");
             header("Location: " . $_SERVER["HTTP_REFERER"]);
         }
 
     }
     else{
-        $_SESSION['alert-messsage'] = "Invalid Token";
-        $_SESSION['alert-error'] = TRUE;
+        log_activity_message("../log/error_log", "Invalid Token");
+        alert_message("error", "Invalid Token");
         header("Location:../");
         exit();
     }

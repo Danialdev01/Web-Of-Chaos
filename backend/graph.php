@@ -27,8 +27,7 @@
                     //* File is not found
                     if($_FILES["image"]["error"] === 4){
 
-                        $_SESSION['alert-message'] = "Image not found";
-                        $_SESSION['alert-error'] = TRUE;
+                        alert_message("error", "Image not found");
                         header("location:../user/upload.php");
                     }
 
@@ -45,8 +44,7 @@
                         //* Wrong file extention
                         if(!in_array($imageExtension, $validImageExtension)){
 
-                            $_SESSION['alert-message'] = "File type not valid";
-                            $_SESSION['alert-error'] = TRUE;
+                            alert_message("error", "File type not valid");
                             header("location:../user/upload.php");               
                         }
 
@@ -86,9 +84,8 @@
                             ]);
             
                             //* Redirect
-                            $_SESSION['alert-message'] = "Uploaded data";
-                            $_SESSION['alert-success'] = TRUE;
                             $id_graph = $connect->lastInsertId();
+                            alert_message("success", "Uploaded data");
                             log_activity_message("../log/user_activity_log", "User ($id_user) Created a graph ($id_graph)");
                             header("location:../user/graph.php?id_graph=$id_graph");
                         }
@@ -96,31 +93,28 @@
                 }
                 else{
                     //* No Image is given
-    
-                    $_SESSION['alert-message'] = "File not found";
-                    $_SESSION['alert-error'] = TRUE;
+                    alert_message("error", "File not found");
                     header("location:../user/upload.php");
                 }
             }
             else{
                 //* Variable not complete
-                $_SESSION['alert-message'] = "Data not complete";
-                $_SESSION['alert-error'] = TRUE;
+                alert_message("error", "Data not complete");
                 header("Location: " . $_SERVER["HTTP_REFERER"]);
 
             }
         }
         else{
-            $_SESSION['alert-message'] = "Wrong Function";
-            $_SESSION['alert-error'] = TRUE;
+            alert_message("error", "Wrong Function");
+            log_activity_message("../log/error_log", "Wrong Function");
             header("Location: " . $_SERVER["HTTP_REFERER"]);
 
         }
 
     }
     else{
-        $_SESSION['alert-message'] = "Invalid Token";
-        $_SESSION['alert-error'] = TRUE;
+        alert_message("error", "Invalid Token");
+        log_activity_message("../log/error_log", "Invalid Token");
         header("Location: " . $_SERVER["HTTP_REFERER"]);
     }
 
