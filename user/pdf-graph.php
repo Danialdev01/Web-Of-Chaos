@@ -5,7 +5,7 @@ include '../config/connect.php';
 if(isset($_GET['id_graph'])){
 
     //* Get user info
-    $_SESSION['user_login_value'] = $_COOKIE['ChaosRandSeer'];
+    $_SESSION['user_login_value'] = $_COOKIE['WebOfChaosUser'];
     $user_value_hash = $_SESSION['user_login_value'];
     $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
     parse_str($user_value_txt, $user_value);

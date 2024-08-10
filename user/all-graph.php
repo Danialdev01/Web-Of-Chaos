@@ -5,7 +5,7 @@
     
         <center>
     
-            <div class="max-w-2xl pt-10">
+            <div style="max-width: 48rem;" class="pt-10">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -46,7 +46,7 @@
                             $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
                             parse_str($user_value_txt, $user_value);
     
-                            $all_user_graph_sql = $connect->prepare("SELECT * FROM graph WHERE id_user = ?");
+                            $all_user_graph_sql = $connect->prepare("SELECT * FROM graphs WHERE id_user = ?");
                             $all_user_graph_sql->execute([$user_value['id_user']]);
     
                             while($graph = $all_user_graph_sql->fetch(PDO::FETCH_ASSOC)){

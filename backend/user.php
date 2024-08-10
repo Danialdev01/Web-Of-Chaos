@@ -3,6 +3,7 @@
     session_start();
     include '../config/connect.php';
     include '../config/security.php';
+    include '../config/functions.php';
     include '../config/csrf-token.php';
 
     //* Check token
@@ -27,7 +28,7 @@
                     $email_user = validateInput($_POST['email_user']);
                     
                     //* Find email in database
-                    $user_sql = $connect->prepare("SELECT * FROM user WHERE email_user = ?");
+                    $user_sql = $connect->prepare("SELECT * FROM users WHERE email_user = ?");
                     $user_sql->execute([$email_user]);
                     $user = $user_sql->fetch(PDO::FETCH_ASSOC);
 
@@ -36,13 +37,15 @@
 
                         //* Hash password
                         $password_user_hash = password_hash($password_user, PASSWORD_DEFAULT);
+                        $created_date_user = date("Y-m-d");
    
                         //* Create user inside database
-                        $create_user_sql = $connect->prepare("INSERT INTO user (id_user, name_user, email_user, password_user, type_user, logo_user, company_name_user, desc_user, status_user) VALUES (NULL, ? , ? , ? , 1 , NULL , NULL, NULL, 1)");
+                        $create_user_sql = $connect->prepare("INSERT INTO users (id_user, name_user, email_user, password_user, type_user, logo_user, company_name_user, desc_user, created_date_user, status_user) VALUES (NULL , ? , ? , ? , 1 , NULL , NULL , NULL , ? , 1)");
                         $create_user_sql->execute([
                             $name_user,
                             $email_user,
-                            $password_user_hash
+                            $password_user_hash,
+                            $created_date_user
                         ]);
     
                         //* Set hash value
@@ -55,31 +58,31 @@
                         $_SESSION['user_login_value'] = $user_value_hash;
     
                         //* Set cookie
-                        setcookie("ChaosRandSeer", $user_value_hash, time() + (86400 * 30), "/");
+                        setcookie("WebOfChaosUser", $user_value_hash, time() + (86400 * 30), "/");
     
                         //* Redirect to user dashboard
-                        $_SESSION['alert-message'] = "Successfully Sign Up";
-                        $_SESSION['alert-success'] = TRUE;
+                        log_activity_message("../log/user_activity_log", "User($id_user) Successfully Sign Up");
+                        alert_message("success", "Successfully Sign Up");
                         header("Location:../user/");
 
                     }
                     else{
-                        $_SESSION['alert-message'] = "Email already exits";
-                        $_SESSION['alert-error'] = TRUE;
+                        log_activity_message("../log/error_log", "Email already exists");
+                        alert_message("error", "Email already exists");
                         header("Location: " . $_SERVER["HTTP_REFERER"]);
                     }
 
                 }
                 else{
-                    $_SESSION['alert-message'] = "Please confirm your password";
-                    $_SESSION['alert-error'] = TRUE;
+                    log_activity_message("../log/error_log", "Password confirm not correct");
+                    alert_message("error", "Password confirm not correct");
                     header("Location: " . $_SERVER["HTTP_REFERER"]);
                 }
 
             }
             else{
-                $_SESSION['alert-message'] = "Data not complete";
-                $_SESSION['alert-error'] = TRUE;
+                log_activity_message("error","../log/error_log", "Data not complete");
+                alert_message("error", "Data not complete");
                 header("Location: " . $_SERVER["HTTP_REFERER"]);
             }
 
@@ -97,7 +100,7 @@
                 $password_input = validateInput($_POST['password']);
                 
                 //* Find user from database
-                $find_user_sql = $connect->prepare("SELECT * FROM user WHERE email_user = ?");
+                $find_user_sql = $connect->prepare("SELECT * FROM users WHERE email_user = ?");
                 $find_user_sql->execute([$email_input]);
                 $user = $find_user_sql->fetch(PDO::FETCH_ASSOC);
                 
@@ -116,32 +119,30 @@
                         $_SESSION['user_login_value'] = $user_value_hash;
 
                         //* Set cookie
-                        setcookie("ChaosRandSeer", $user_value_hash, time() + (86400 * 30), "/");
+                        setcookie("WebOfChaosUser", $user_value_hash, time() + (86400 * 30), "/");
 
-                        $_SESSION['alert-message'] = "Successfully Logged In";
-                        $_SESSION['alert-success'] = TRUE;
-                        header("location:../user/");
-
-                        // echo "Berjaya";
+                        log_activity_message("../log/user_activity_log", "User($id_user) Successfully Log In");
+                        alert_message("success", "Successfully Log In");
+                        header("Location:../user/");
 
                     }
                     else{
-                        $_SESSION['alert-message'] = "Password Or Username is incorrect";
-                        $_SESSION['alert-error'] = TRUE;
+                        log_activity_message("../log/error_log", "Password is incorrect");
+                        alert_message("error", "Password or Username is incorrect");
                         header("Location: " . $_SERVER["HTTP_REFERER"]);
                     }
 
                 }
                 else{
-                    $_SESSION['alert-message'] = "Password Or Username is incorrect";
-                    $_SESSION['alert-error'] = TRUE;
+                    log_activity_message("../log/error_log", "Username is incorrect");
+                    alert_message("error", "Password or Username is incorrect");
                     header("Location: " . $_SERVER["HTTP_REFERER"]);
                 }
 
             }
             else{
-                $_SESSION['alert-message'] = "Data not complete";
-                $_SESSION['alert-error'] = TRUE;
+                log_activity_message("../log/error_log", "Data not complete");
+                alert_message("error", "Data not complete");
                 header("Location: " . $_SERVER["HTTP_REFERER"]);
             }
 
@@ -150,9 +151,16 @@
         //@ Sign Out
         elseif(isset($_POST['signout'])){
 
+            $user_value_hash = $_SESSION['user_login_value'];
+            $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
+            parse_str($user_value_txt, $user_value);
+            $id_user = $user_value['id_user'];
+
+            log_activity_message("../log/user_activity_log", "User ($id_user) Log Out");
+
             //* Sign Out
             session_destroy();
-            setcookie('ChaosRandSeer', 2, time() - 3600 , "/");
+            setcookie('WebOfChaosUser', 2, time() - 3600 , "/");
             header("location:../");
             exit();
 
@@ -190,15 +198,15 @@
                 ]);
 
                 //* Redirect user 
-                $_SESSION['alert-message'] = "Successfully Updated User";
-                $_SESSION['alert-success'] = TRUE;
+                log_activity_message("../log/user_activity_log", "Successfully Updated User");
+                alert_message("success", "Successfully Updated User");
                 header("location:../user/user.php");
 
             }
             else{
 
-                $_SESSION['alert-message'] = "Data not complete";
-                $_SESSION['alert-error'] = TRUE;
+                log_activity_message("../log/error_log", "Data not complete");
+                alert_message("error", "Data not complete");
                 header("Location: " . $_SERVER["HTTP_REFERER"]);   
             }
         }
@@ -215,7 +223,7 @@
                 parse_str($user_value_txt, $user_value);
 
                 //* Find user info from database
-                $user_sql = $connect->prepare("SELECT * FROM user WHERE id_user = ?");
+                $user_sql = $connect->prepare("SELECT * FROM users WHERE id_user = ?");
                 $user_sql->execute([$user_value['id_user']]);
                 $user = $user_sql->fetch(PDO::FETCH_ASSOC);
 
@@ -223,26 +231,31 @@
                 if(password_verify($user_value['password_user'], $user['password_user'])){
 
                     //* Deactivate user
-                    $deactivate_user_sql = $connect->prepare("UPDATE user SET status_user = '0' WHERE id_user = ?");
+                    $deactivate_user_sql = $connect->prepare("UPDATE users SET status_user = '0' WHERE id_user = ?");
                     $deactivate_user_sql->execute([$user_value['id_user']]);
+
+                   
+                    $id_user = $user_value['id_user'];
+
+                    log_activity_message("../log/user_activity_log", "User ($id_user) Deactivate Account");
 
                     //* Destroy sesssion
                     session_destroy();
-                    setcookie('ChaosRandSeer', 2, time() - 3600 , "/");
+                    setcookie('WebOfChaosUser', 2, time() - 3600 , "/");
                     header("location:../");
                     exit();
                     
                 }
                 else{
-                    $_SESSION['alert-message'] = "Password user not valid";
-                    $_SESSION['alert-error'] = TRUE;
+                    log_activity_message("../log/error_log", "Password user not valid");
+                    alert_message("error", "Password user not valid");
                     header("Location: " . $_SERVER["HTTP_REFERER"]);
                 }
 
             }    
             else{
-                $_SESSION['alert-message'] = "User value not set";
-                $_SESSION['alert-error'] = TRUE;
+                log_activity_message("../log/error_log", "User value not set");
+                alert_message("error", "User value not set");
                 header("Location: " . $_SERVER["HTTP_REFERER"]);
             }
 

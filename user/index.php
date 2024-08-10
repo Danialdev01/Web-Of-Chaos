@@ -8,11 +8,7 @@
         <center>
             <?php 
                 
-                $user_value_hash = $_SESSION['user_login_value'];
-                $user_value_txt = openssl_decrypt($user_value_hash, 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
-                parse_str($user_value_txt, $user_value);
-
-                $user_sql = $connect->prepare("SELECT * FROM user WHERE id_user = ?");
+                $user_sql = $connect->prepare("SELECT * FROM users WHERE id_user = ?");
                 $user_sql->execute([$user_value['id_user']]);
                 $user = $user_sql->fetch(PDO::FETCH_ASSOC);
             ?>

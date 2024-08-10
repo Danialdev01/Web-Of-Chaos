@@ -3,6 +3,7 @@
 
     include '../config/connect.php';
     include '../config/security.php';
+    include '../config/functions.php';
     include '../config/csrf-token.php';
 
     if(isset($_POST['token']) && verifyCSRFToken($_POST['token'])){
@@ -72,7 +73,7 @@
                             $create_date_graph = date("Y-m-d");
                             
                             //* Add data to database
-                            $create_graph_sql = $connect->prepare("INSERT INTO graph(id_graph, id_user, name_graph, file_name_graph, val_one_name_graph, val_one_unit_graph, val_two_name_graph, val_two_unit_graph, created_date_graph, status_graph) VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , ? , 1)");
+                            $create_graph_sql = $connect->prepare("INSERT INTO graphs(id_graph, id_user, name_graph, file_name_graph, val_one_name_graph, val_one_unit_graph, val_two_name_graph, val_two_unit_graph, created_date_graph, status_graph) VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , ? , 1)");
                             $create_graph_sql->execute([
                                 $id_user,
                                 $name_graph,
@@ -88,6 +89,7 @@
                             $_SESSION['alert-message'] = "Uploaded data";
                             $_SESSION['alert-success'] = TRUE;
                             $id_graph = $connect->lastInsertId();
+                            log_activity_message("../log/user_activity_log", "User ($id_user) Created a graph ($id_graph)");
                             header("location:../user/graph.php?id_graph=$id_graph");
                         }
                     }

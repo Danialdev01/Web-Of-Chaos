@@ -14,7 +14,7 @@
 
                 //* Find graph in database
                 $id_graph = htmlspecialchars($_GET['id_graph']);
-                $graph_sql = $connect->prepare("SELECT * FROM graph WHERE id_graph = ? AND id_user = ?");
+                $graph_sql = $connect->prepare("SELECT * FROM graphs WHERE id_graph = ? AND id_user = ?");
                 $graph_sql->execute([
                     $id_graph,
                     $user_value['id_user']
