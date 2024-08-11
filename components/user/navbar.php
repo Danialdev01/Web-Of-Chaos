@@ -7,6 +7,9 @@
             //* Set session value
             $_SESSION['user_login_value'] = $_COOKIE['WebOfChaosUser'];
         }
+        else{
+            header("location:$location_index/");
+        }
     }
     else{
         header("location:$location_index/");
