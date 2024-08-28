@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.50.0",
+    "datatables.net-dt": "^2.1.4",
     "flowbite": "^2.4.1"
   }
 }

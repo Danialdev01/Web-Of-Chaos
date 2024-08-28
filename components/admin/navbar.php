@@ -9,14 +9,14 @@
         }
     }
     else{
-        // header("location:$location_index/");
+        header("location:$location_index/admin-signin.php");
     }
 
 ?>
 
 <nav style="z-index: 1000;" class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-  <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+  <a href="<?php echo $location_index?>" class="flex items-center space-x-3 rtl:space-x-reverse">
         <div class="hidden md:block">
             <img src="<?php echo $location_index?>/src/img/logo.png" class="h-11" alt="Logo">
         </div>
@@ -132,7 +132,7 @@
                 </a>
             </li>
             <li>
-                <form class="w-full" action="<?php echo $location_index?>/backend/user.php" method="post">
+                <form class="w-full" action="<?php echo $location_index?>/backend/admin.php" method="post">
                     <input type="hidden" name="token" value="<?php echo $token?>">
                     <button name="signout" type="submit" class="w-full flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-4 h-4 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" style="width:19px; height:19px; fill:#8e8e8e;"  viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"></path></svg>

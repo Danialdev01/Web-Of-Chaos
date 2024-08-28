@@ -27,10 +27,9 @@ The "Web Of Chaos" project aims to create an easy-to-use online system for predi
     <li>The website includes features for users to view and manage their usage reports.</li>
 </ul>
 
-<h3>Database Design:</h3>
-<img src="documentation/Diagram/erd.png">
 
-<h3></h3>
+<h3>Copyright</h3>
+<img src="./documentation/img/copyright.png">
 
 <h3>Colaboration between</h3>
 <img width="200px" src="./documentation/img/bannerkvks-removebg-preview.png" alt="kvks-logo">

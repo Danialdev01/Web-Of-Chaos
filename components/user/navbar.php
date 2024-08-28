@@ -8,7 +8,7 @@
             $_SESSION['user_login_value'] = $_COOKIE['WebOfChaosUser'];
         }
         else{
-            header("location:$location_index/");
+            // header("location:$location_index/");
         }
     }
     else{
@@ -19,12 +19,12 @@
 
 <nav style="z-index: 1000;" class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-  <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+  <a href="<?php echo $location_index?>" class="flex items-center space-x-3 rtl:space-x-reverse">
         <div class="hidden md:block">
-            <img src="<?php echo $location_index?>/src/img/logo.png" class="h-11" alt="Logo">
+            <img src="<?php echo $location_index?>/src/img/logo.png" class="h-11 rounded" alt="Logo">
         </div>
         <div class="md:hidden">
-            <img src="<?php echo $location_index?>/src/img/sm-logo.png" class="h-11" alt="Logo">
+            <img src="<?php echo $location_index?>/src/img/sm-logo.png" class="h-11 rounded" alt="Logo">
         </div>
   </a>
   <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -141,7 +141,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
+                <a href="<?php echo $location_index?>/user/documentation.php" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group">
                     <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
                     <span class="ml-3">Documentation</span>
                 </a>
