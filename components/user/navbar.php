@@ -6,6 +6,25 @@
 
             //* Set session value
             $_SESSION['user_login_value'] = $_COOKIE['WebOfChaosUser'];
+
+            //* decrypt value
+            $user_value_txt = openssl_decrypt($_SESSION['user_login_value'], 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
+            parse_str($user_value_txt, $user_value);
+            
+            //* Find the user
+            $id_user = htmlspecialchars($user_value['id_user']);
+            $find_user_sql = $connect->prepare("SELECT * FROM users WHERE id_user = ?");
+            $find_user_sql->execute([$id_user]);
+            $user = $find_user_sql->fetch(PDO::FETCH_ASSOC);
+
+            if(!($user['id_user'] == $user_value['id_user'])){
+                header("location:$location_index/");
+            }
+
+            if(!(password_verify($user_value['password_user'], $user['password_user']))){
+                header("location:$location_index/");
+            }
+
         }
         else{
             // header("location:$location_index/");
@@ -14,7 +33,6 @@
     else{
         header("location:$location_index/");
     }
-
 ?>
 
 <nav style="z-index: 1000;" class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -130,8 +148,9 @@
 
                             
                             //* Count how many documents
+                            $id_user = htmlspecialchars($user_value['id_user']);
                             $graph_count_sql = $connect->prepare("SELECT * FROM graphs WHERE id_user = ?");
-                            $graph_count_sql->execute([$user_value['id_user']]);
+                            $graph_count_sql->execute([$id_user]);
                             $i = 0;
                             while($graph_count = $graph_count_sql->fetch(PDO::FETCH_ASSOC)){$i++;}
                             echo $i;

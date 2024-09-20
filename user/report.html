@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../src/img/favicon.ico" type="image/x-icon">
+    <title>{{ name_graph }}</title>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        width: 100%;
+        height: 100%;
+        font-family: arial;
+    }
+    .surat{
+        display: flex;
+        justify-content: center;
+    }
+    .surat-laporan{
+        height: 29.7cm;
+        width: 21cm;
+    }
+
+    .underline{
+        border: none;
+        border-bottom: 1px dotted black;
+        padding: 0;
+        width: 230px;
+
+    }
+    .ulasan{
+        display: flex;
+    }
+    .tanda-tangan{
+        /* margin-left: 10px; */
+        width: 250px;
+        margin-top: 70px;
+    }
+    .underline2{
+        border: none;
+        border-bottom: 1px dotted black;
+        margin-bottom: 15px;
+        padding: 0;
+        width: 250px;
+    }
+    .text{
+        display: flex;
+        justify-content: center;
+    }
+    .row{
+        display: flex;
+    }
+    .pengesahan{
+        margin-top: 20px;
+        width: 295px;
+    }
+    .line{
+        border: none;
+        border-bottom: 1px dotted black;
+        margin-bottom: 15px;
+        padding: 0;
+        width: 250px;
+    }
+    td{
+        text-align: center;
+    }
+    .filler-1 td:first-child{
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+    }
+    .filler-1 td:nth-child(2){
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+    }
+    .filler-1 td:nth-child(3){
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+    }
+    .filler-1 td:nth-child(4){
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+    h3{
+        font-size: 1rem;
+    }
+    #bordered td{
+        border: 1px solid black;
+        padding: 5px;
+    }
+</style>
+<body style="height: 100vh;">
+    <div class="surat">
+        <div class="surat-laporan" style="height: 1000px;">
+            <div style="padding-top: 40px;" class="header">
+                <center>
+                    <p style="font-weight: bold; font-size: 1.2rem;padding-bottom: 10px;">GRAPH REPORT</p>
+                    <p>{{ name_graph }}</p>
+                </center>
+            </div>
+            <br><br><br><br><br><br>
+            <div class="content">
+                <div class="" style="margin-left: 30px;">
+                    <table style="text-align: left;">
+                        <tr>
+                            <td style="text-align: left;">Created Date</td>
+                            <td>:</td>
+                            <td style="text-align: left;">{{ created_date_graph }}</td>
+                        </tr>
+                    </table>
+
+                    <br>
+                    <h3>Graph Summary: </h3>
+                    <p style="max-width: 95%;padding-top: 10px;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque, rerum nam esse quia, exercitationem dicta voluptatibus blanditiis earum dignissimos ab, voluptas libero excepturi quo facilis porro est explicabo ipsa soluta. In similique maxime temporibus perspiciatis accusamus libero pariatur iusto ipsam quod eligendi eos, id vitae, doloribus adipisci quam! Numquam.</p>
+                </div>
+
+            </div>
+            <br>
+            
+        </div>
+    </div>
+</body>
+</html>

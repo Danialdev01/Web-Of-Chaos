@@ -41,8 +41,10 @@
                 <div style="max-width: 56rem;" class=" pt-10">
                     <h2 class="text-4xl font-bold dark:text-white"><?php echo htmlspecialchars($graph['name_graph'])?></h2>
     
-                    <?php include '../components/user/time-series-graph.php';?>
                     <?php include '../components/user/prediction-graph.php';?>
+                    <?php 
+                        include '../components/user/time-series-graph.php';
+                    ?>
                 </div>
             </div>
         </center>

@@ -122,7 +122,7 @@
                         setcookie("WebOfChaosUser", $user_value_hash, time() + (86400 * 30), "/");
 
                         log_activity_message("../log/user_activity_log", "User($id_user) Successfully Log In");
-                        alert_message("success", "Successfully Log In");
+                        // alert_message("success", "Successfully Log In");
                         header("Location:../user/");
 
                     }
