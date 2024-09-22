@@ -10,7 +10,7 @@
         <?php
           // TODO change 
           $value = $graph['embedding_dimension_value_graph'] % 2 + 1; 
-          $value = 97 - $value;
+          $value = 95 - $value;
           echo "0.". $value . "CC";
         ?>
       </span>
@@ -118,12 +118,6 @@
         legend: {
           display: true,
         },
-        zoom: {
-          limits: {
-            y: {min: 0, max: 100},
-            y2: {min: -5, max: 5}
-          },
-        }
       },
     },
   });

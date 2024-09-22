@@ -1,5 +1,5 @@
-
 config/.env
-# uploads/documents/*.txt
-
-# uploads/documents/*.csv
+uploads/documents/*.csv
+log/admin_activity_log
+log/error_activity_log
+log/user_activity_log

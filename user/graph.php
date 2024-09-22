@@ -45,6 +45,7 @@
                     <?php 
                         include '../components/user/time-series-graph.php';
                     ?>
+                    
                 </div>
             </div>
         </center>

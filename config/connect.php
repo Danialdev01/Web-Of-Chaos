@@ -8,6 +8,7 @@
     $username = $env['USERNAME'];
     $password = $env['PASSWORD'];
     $dbname = $env['DBNAME'];
+    $ai_api_key = $env['AI_API_KEY'];
 
     $secret_key = $env['SECRET_KEY'];
 
