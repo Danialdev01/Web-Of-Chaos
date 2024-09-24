@@ -52,13 +52,14 @@ use Dompdf\Options;
             $html = str_replace("{{ created_date_graph }}", $date, $html);
             $html = str_replace("{{ location }}", $_SERVER["DOCUMENT_ROOT"], $html);
             $html = str_replace("{{ name_graph }}", strtoupper($graph['name_graph']), $html);
-
+            
             //* Report content
             $graph_report_sql = $connect->prepare("SELECT * FROM reports WHERE id_graph = ?");
             $graph_report_sql->execute([$id_graph]);
             $graph_report = $graph_report_sql->fetch(PDO::FETCH_ASSOC);
             $text_ai_data = json_decode($graph_report['text_ai_report'], true);
             $content = $text_ai_data['choices'][0]['message']['content'];
+            $html = str_replace("{{ file_graph }}", strtoupper($graph_report['file_prediction_report']), $html);
 
             $html = str_replace("{{ text_ai_report }}",format_text($content), $html);
 
