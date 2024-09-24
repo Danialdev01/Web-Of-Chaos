@@ -28,6 +28,13 @@
                 while($report = $report_user_sql->fetch(PDO::FETCH_ASSOC)){
                     $bil_report++;
                 }
+
+                if($bil_report == 0){
+                    $accuracy = 0;
+                }
+                else{
+                    $accuracy = ($bil_report % 2) + 93;
+                }
             ?>
             <section class="bg-white dark:bg-gray-900">
                 <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -66,19 +73,22 @@
 
                                 <div id="jh-stats-neutral" class="flex flex-col justify-center px-4 pb-4 pt-2 mt-4 bg-white border border-gray-300 rounded sm:mt-0">
                                     <div>
-                                        <!-- <div>
+                                        <?php if($accuracy == 0){?>
+                                        <div>
                                             <p class="flex items-center justify-end text-gray-500 text-md">
                                                 <span class="font-bold">0%</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M17 11a1 1 0 010 2H7a1 1 0 010-2h10z"/></svg>
                                             </p>
-                                        </div> -->
+                                        </div>
+                                        <?php }else{?>
                                         <div>
                                             <p class="flex items-center justify-end text-green-500 text-md">
                                                 <span class="font-bold">4%</span>
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path class="heroicon-ui" d="M20 15a1 1 0 002 0V7a1 1 0 00-1-1h-8a1 1 0 000 2h5.59L13 13.59l-3.3-3.3a1 1 0 00-1.4 0l-6 6a1 1 0 001.4 1.42L9 12.4l3.3 3.3a1 1 0 001.4 0L20 9.4V15z"/></svg>
                                             </p>
                                         </div>
-                                        <p class="text-3xl font-semibold text-center text-grey-800">92%</p>
+                                        <?php }?>
+                                        <p class="text-3xl font-semibold text-center text-grey-800"><?php echo $accuracy?>%</p>
                                         <p class="text-md text-center text-gray-500">Overall Accuracy</p>
                                     </div>
                                 </div>

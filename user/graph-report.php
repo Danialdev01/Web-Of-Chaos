@@ -39,9 +39,9 @@ use Dompdf\Options;
 
             require __DIR__ . "../../vendor/autoload.php";
             
+            define("DOMPDF_ENABLE_REMOTE", false);
             $options = new Options();
             $options->setChroot(__DIR__);
-            
             $dompdf = new Dompdf($options);
             $dompdf->setPaper("A4", "Portrate");
             
@@ -50,6 +50,7 @@ use Dompdf\Options;
             $date = date_create($graph['created_date_graph']);
             $date = date_format($date,"d / m / Y");
             $html = str_replace("{{ created_date_graph }}", $date, $html);
+            $html = str_replace("{{ location }}", $_SERVER["DOCUMENT_ROOT"], $html);
             $html = str_replace("{{ name_graph }}", strtoupper($graph['name_graph']), $html);
 
             //* Report content
@@ -63,7 +64,9 @@ use Dompdf\Options;
 
             $dompdf->loadHtml($html);
             $dompdf->render();
-            $dompdf->stream("graph-report.pdf", ["Attachment" => 0]);
+
+            $name_graph = $graph['name_graph'];
+            $dompdf->stream("$name_graph Report Summary.pdf", ["Attachment" => 0]);
 
         }
     }

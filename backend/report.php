@@ -45,7 +45,7 @@
             $name_graph = $graph_report['name_graph'];
             $val_one_name_graph = $graph_report['val_one_name_graph'];
             $val_two_name_graph = $graph_report['val_two_name_graph'];
-            $prompt = "Given a graph that is normal but quite concerning. Based on the graph given, Please make a formal summary on what are the step on how to avoid a any climate issue and problem based on a graph named $name_graph and the graph contains $val_one_name_graph and $val_two_name_graph.";
+            $prompt = "Given a graph that is normal but quite concerning. Based on the graph given, Please give a small summary about a graph that is about $name_graph that is related to $val_one_name_graph and $val_two_name_graph. Think about the issue that can be associated with $name_graph and give some recommendation on how to prevent it. Give the output as html. Just give some p tag and ul li tags for the points. Dont make a header.";
             include('../components/user/ai.php');
     
             $user_value_txt = openssl_decrypt($_SESSION['user_login_value'], 'AES-256-CBC', $secret_key, 0, 'v_for_encryption');
@@ -74,7 +74,7 @@
         }
         else{
             $count = $check_report['count'];
-            log_activity_message("../log/user_activity_log", "Report already in database = $count");
+            log_activity_message("../log/user_activity_log", "Graph ($id_graph) report already in database");
         }
 
     }
