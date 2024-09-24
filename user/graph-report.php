@@ -39,9 +39,10 @@ use Dompdf\Options;
 
             require __DIR__ . "../../vendor/autoload.php";
             
-            define("DOMPDF_ENABLE_REMOTE", false);
             $options = new Options();
             $options->setChroot(__DIR__);
+            $options->set('isRemoteEnabled', true);
+
             $dompdf = new Dompdf($options);
             $dompdf->setPaper("A4", "Portrate");
             
