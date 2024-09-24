@@ -60,7 +60,7 @@ use Dompdf\Options;
             $graph_report = $graph_report_sql->fetch(PDO::FETCH_ASSOC);
             $text_ai_data = json_decode($graph_report['text_ai_report'], true);
             $content = $text_ai_data['choices'][0]['message']['content'];
-            $html = str_replace("{{ file_graph }}", strtoupper($graph_report['file_prediction_report']), $html);
+            $html = str_replace("{{ file_graph }}", $graph_report['file_prediction_report'], $html);
 
             $html = str_replace("{{ text_ai_report }}",format_text($content), $html);
 
