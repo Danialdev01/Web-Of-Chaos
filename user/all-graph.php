@@ -61,7 +61,7 @@
                                                 $report_graph_sql->execute([$graph['id_graph']]);
                                                 $report_graph = $report_graph_sql->fetch(PDO::FETCH_ASSOC);
 
-                                                if($report_graph['id_graph'] == $graph['id_graph']){
+                                                if(isset($report_graph['id_graph'])){
                                                 ?>
                                                     <a href="./graph-report.php?id_graph=<?php echo $graph['id_graph']?>">
                                                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -69,6 +69,9 @@
                                                         </svg>
                                                     </a>
                                                 <?php
+                                                }
+                                                else{
+                                                    echo "-";
                                                 }
                                             ?>
                                         </center>
