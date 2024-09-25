@@ -71,7 +71,7 @@
           ticks: {
             callback: function(value) {
               let th = value.toFixed(2);
-              return th + "m";
+              return th + "<?php echo $graph['val_one_unit_graph']?>";
             },
           },
         },
