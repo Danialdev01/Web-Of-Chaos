@@ -97,6 +97,22 @@
                             </div>
                         </div>
                     </section>
+
+                    <section class="section" id="3">
+                        <div class="section-con">
+                            <div class="header2-doc" style="display: flex;">
+                                <h1>4.</h1>
+                                <h2>Data Format</h2>
+                            </div>
+                            <div class="text">
+                                <div class="NoteBox"><h3>CSV:</h3>
+                                    <p>Make sure your data only contain its value. Make sure its separated using commas. The data needs to have 3 columns that is date, time and data value.</p></div>
+                            </div>
+                            <div class="img-sec" id="3">
+                                <img class="img-doc" src="../documentation/img/data example.png" alt="2">
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
             

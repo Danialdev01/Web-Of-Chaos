@@ -104,6 +104,77 @@
 
             }
         }
+
+        //@ Delete Graph
+        elseif(isset($_POST['delete'])){
+
+            if(isset($_POST['id_graph']) && isset($_POST['id_user'])){
+
+                //* Get variables
+                $id_graph = validateInput($_POST['id_graph']);
+                $id_user = validateInput($_POST['id_user']);
+
+                //* Find graph info 
+                $graph_sql = $connect->prepare("SELECT * FROM graphs WHERE id_graph = ?");
+                $graph_sql->execute([$id_graph]);
+                $graph = $graph_sql->fetch(PDO::FETCH_ASSOC);
+
+                //* Check if user owns graph
+                if($graph['id_user'] == $id_user){
+                    
+                    //* Delete Graph
+                    $delete_graph_sql = $connect->prepare("DELETE FROM graphs WHERE id_graph = ?");
+                    $delete_graph_sql->execute([$id_graph]);
+
+                    //* Find Report info
+                    $report_sql = $connect->prepare("SELECT * FROM reports WHERE id_graph = ?");
+                    $report_sql->execute([$id_graph]);
+                    $report = $report_sql->fetch(PDO::FETCH_ASSOC);
+
+                    //* Check if report is available
+                    if($report['id_graph'] == $id_graph){
+
+                        //* Delete report
+                        $delete_report_sql = $connect->prepare("DELETE FROM reports WHERE id_graph = ?");
+                        $delete_report_sql->execute([$id_graph]);
+
+                        //TODO delete picture graph
+                        //* Delete picture graph
+                        if(!unlink("../uploads/graphs/" . $report['file_prediction_report'])){
+                            alert_message("error", "Image Prediction Not Found");
+                            header("location:../user/all-graph.php");
+                        }
+
+                        if(!unlink("../uploads/graphs/" . $report['file_ts_report'])){
+                            alert_message("error", "Image Time Series Not Found");
+                            header("location:../user/all-graph.php");
+                        }
+
+                    }
+
+                    //* Delete file data user
+                    if(!unlink("../uploads/documents/" . $graph['file_name_graph'])){
+                        alert_message("error", "File not Found");
+                        header("location:../user/all-graph.php");
+                    }
+
+                    alert_message("success", "Deleted Data");
+                    log_activity_message("../log/user_activity_log", "User ($id_user) Deleted a graph ($id_graph)");
+                    header("location:../user/all-graph.php");
+                }
+                else{
+                    //* Variable not complete
+                    alert_message("error", "User Not Allowed To Delete");
+                    header("Location: " . $_SERVER["HTTP_REFERER"]);
+
+                }
+            }
+            else{
+                //* Variable not complete
+                alert_message("error", "Data not complete");
+                header("Location: " . $_SERVER["HTTP_REFERER"]);
+            }
+        }
         else{
             alert_message("error", "Wrong Function");
             log_activity_message("../log/error_log", "Wrong Function");
