@@ -1,4 +1,4 @@
-<div class="pt-5 px-3 w-full absolute">
+<div class="pt-5 px-3 w-full absolute" style="z-index: 1000px;">
 
     <?php
 
