@@ -27,7 +27,11 @@
 
                                 ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($user['name_user'])?></td>
+                                    <td>
+                                        <a href="./user-info.php?id_user=<?php echo $user['id_user']?>">
+                                            <?php echo htmlspecialchars($user['name_user'])?>
+                                        </a>
+                                    </td>
                                     <td><?php echo htmlspecialchars($user['email_user'])?></td>
                                     <td><?php echo htmlspecialchars($user['type_user'])?></td>
 

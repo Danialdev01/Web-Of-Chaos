@@ -26,7 +26,10 @@
 
                                 ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($graph['name_graph'])?></td>
+                                    <td>
+                                        <a href="./graph.php?id_graph=<?php echo $graph['id_graph']?>">
+                                            <?php echo htmlspecialchars($graph['name_graph'])?></td>
+                                        </a>
                                     <td><?php echo htmlspecialchars($graph['created_date_graph'])?></td>
 
                                     <td>

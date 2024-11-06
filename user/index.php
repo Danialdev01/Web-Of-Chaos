@@ -120,20 +120,25 @@
                                     $all_user_graph_sql = $connect->prepare("SELECT * FROM graphs WHERE id_user = ?");
                                     $all_user_graph_sql->execute([$user_value['id_user']]);
             
+                                    $i = 0;
                                     while($graph = $all_user_graph_sql->fetch(PDO::FETCH_ASSOC)){
-                                        ?>
-            
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                <?php echo htmlspecialchars($graph['name_graph'])?>
-                                            </td>
-                                            
-                                            <td class="px-6 py-4 text-right">
-                                                <a href="./graph.php?id_graph=<?php echo $graph['id_graph']?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</a>
-                                            </td>
-                                        </tr>
-            
-                                        <?php
+
+                                        if($i < 3){
+                                            ?>
+
+                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                    <?php echo htmlspecialchars($graph['name_graph'])?>
+                                                </td>
+                                                
+                                                <td class="px-6 py-4 text-right">
+                                                    <a href="./graph.php?id_graph=<?php echo $graph['id_graph']?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</a>
+                                                </td>
+                                            </tr>
+
+                                            <?php
+                                        }
+                                        $i++;
                                     }
             
                                     ?>

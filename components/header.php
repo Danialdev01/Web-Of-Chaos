@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo $location_index?>/src/css/output.css">
     <link rel="stylesheet" href="<?php echo $location_index?>/node_modules/flowbite/dist/flowbite.min.css">
-    <link rel="shortcut icon" href="<?php echo $location_index?>/src/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php echo $location_index?>/src/img/favicon/favicon.ico" type="image/x-icon">
 
     
     <style>
@@ -44,4 +44,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <title>Web Of Chaos</title>
+
+    <meta name="title" content="Web Of Chaos">
+    <meta name="description" content="Easy to use web application using chaos theory and artificial intelligence to predict time series data.">
 </head>
