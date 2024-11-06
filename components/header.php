@@ -47,4 +47,6 @@
 
     <meta name="title" content="Web Of Chaos">
     <meta name="description" content="Easy to use web application using chaos theory and artificial intelligence to predict time series data.">
+
+    <script src="<?php echo $location_index?>/script.js"></script>
 </head>
