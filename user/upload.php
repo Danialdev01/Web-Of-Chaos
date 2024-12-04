@@ -45,7 +45,7 @@
         
                         <div class="grid gap-6 mb-6 text-left">
                             <div>
-                                <labe for="variable_two_unit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Variable 1 Unit</label>
+                                <labe for="variable_two_unit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Variable 2 Unit</label>
                                 <input name="variable_two_unit" type="text" id="varible_two_unit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="h" required />
                             </div>
                         </div>

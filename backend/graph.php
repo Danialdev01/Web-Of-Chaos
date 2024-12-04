@@ -6,6 +6,24 @@
     include '../config/functions.php';
     include '../config/csrf-token.php';
 
+    function validateCSV($filePath, $minColumns) {
+        if (($handle = fopen($filePath, 'r')) !== FALSE) {
+            $rowCount = 0;
+            while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
+                $rowCount++;
+                // Check if the number of columns is greater than the specified minimum
+                if (count($data) < $minColumns) {
+                    fclose($handle);
+                    return "Wrong Format";
+                }
+            }
+            fclose($handle);
+            return true; // CSV is valid
+        } else {
+            return "Could not open the file.";
+        }
+    }
+
     if(isset($_POST['token']) && verifyCSRFToken($_POST['token'])){
 
         //@ Insert new graph
@@ -54,6 +72,14 @@
                             $newImageName .= '.' . $imageExtension;
                             $destination = __DIR__ . "/../uploads/documents/" . $newImageName;
                             move_uploaded_file($TmpName, $destination);
+
+                            // Validate the CSV file
+                            $csvValidationResult = validateCSV($destination, 3); 
+                            if ($csvValidationResult !== true) {
+                                alert_message("error", $csvValidationResult);
+                                header("location:../user/upload.php");
+                                exit();
+                            }
                             
                             //* Get user info
                             $user_value_hash = $_SESSION['user_login_value'];
